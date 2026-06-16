@@ -28,11 +28,29 @@
   --muted: #8A7A6A;
   --text: #2B2018;
 }
+[data-theme="light"] .kfs-root::before {
+  opacity: 0.008;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 .kfs-root {
-  background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 85%, black) 100%);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(156,138,120,0.03) 28px,
+      rgba(156,138,120,0.03) 30px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 58px,
+      rgba(156,138,120,0.02) 58px,
+      rgba(156,138,120,0.02) 60px
+    ),
+    linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 85%, black) 100%);
   color: var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
   min-height: 100vh;
@@ -40,6 +58,17 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+}
+.kfs-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.015;
+  background-image: radial-gradient(circle, var(--text) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 .font-display {
@@ -56,7 +85,7 @@
 .muted-text { color: var(--muted); }
 .green-text { color: var(--green); }
 .star-text { color: var(--star); }
-.surface-2-bg { background: var(--surface-2); }
+.surface-2-bg { background: var(--surface-2); box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 6px rgba(0,0,0,0.15); }
 .surface-3-bg { background: var(--surface-3); }
 
 .divider {
@@ -95,11 +124,12 @@
   width: 100%;
   height: 100%;
   border-radius: 9999px;
-  background: radial-gradient(circle at 35% 30%, #FFA85C, #E0483E 75%);
+  background: radial-gradient(circle at 35% 30%, #FFA85C, #E0483E 60%, #A0301E 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid rgba(255,200,87,0.45);
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.1);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: transform 0.08s ease;
@@ -122,8 +152,8 @@
 
 /* Particles */
 @keyframes particleBurst {
-  0% { opacity: 1; transform: translate(0, 0) scale(1); }
-  100% { opacity: 0; transform: translate(var(--px), var(--py)) scale(0.3); }
+  0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--px), var(--py)) scale(0.4) rotate(var(--rot, 45deg)); }
 }
 .particle {
   animation: particleBurst 0.6s ease-out forwards;
@@ -182,15 +212,25 @@
 }
 .golden-enter { animation: goldenFadeIn 0.3s ease-out; }
 
+@keyframes sparkleRotate {
+  0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+  50%  { transform: scale(1) rotate(90deg); opacity: 1; }
+  100% { transform: scale(0) rotate(180deg); opacity: 0; }
+}
+.golden-sparkle { animation: sparkleRotate 1.2s ease-in-out infinite; transform-origin: center; }
+
 /* Upgrade rows */
 .icon-box {
   background: var(--surface-2);
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 10px;
+  padding: 6px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2), 0 1px 0 rgba(255,255,255,0.05);
 }
 
 .upgrade-row {
@@ -211,7 +251,8 @@
   position: relative;
 }
 .upgrade-row:last-child { border-bottom: none; }
-.upgrade-row:active { background: rgba(255,122,51,0.06); }
+.upgrade-row:hover:not(:disabled) { background: rgba(255,122,51,0.04); }
+.upgrade-row:active:not(:disabled) { background: rgba(255,122,51,0.08); }
 .upgrade-row:disabled { cursor: default; }
 
 .upgrade-progress {
@@ -242,13 +283,19 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--surface-1);
-  border-top: 1px solid rgba(156,138,120,0.2);
+  background: color-mix(in srgb, var(--surface-1) 90%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(156,138,120,0.15);
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
   display: flex;
   justify-content: space-around;
   padding: 6px 0;
   padding-bottom: max(6px, env(safe-area-inset-bottom));
   z-index: 30;
+}
+@supports not (backdrop-filter: blur(12px)) {
+  .nav-bar { background: var(--surface-1); }
 }
 
 .nav-tab {
@@ -291,8 +338,10 @@
   font-size: 0.85rem;
   letter-spacing: 0.12em;
   color: var(--muted);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   margin-top: 16px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(255,122,51,0.12);
 }
 
 /* Settings */
@@ -347,13 +396,18 @@
 
 .achievement-card {
   background: var(--surface-2);
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 12px 10px;
   text-align: center;
   opacity: 0.35;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid transparent;
 }
-.achievement-card.unlocked { opacity: 1; }
+.achievement-card.unlocked {
+  opacity: 1;
+  border-color: rgba(255,200,87,0.2);
+  box-shadow: 0 2px 8px rgba(255,200,87,0.08);
+}
 
 /* Prestige */
 .prestige-btn {
@@ -361,7 +415,9 @@
   padding: 14px;
   border: 2px solid var(--star);
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
+  background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.05) 40%, rgba(255,215,0,0.15) 60%, rgba(255,215,0,0.05) 100%);
+  background-size: 200% 200%;
+  animation: shimmer 3s ease-in-out infinite;
   color: var(--star);
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.3rem;
@@ -370,7 +426,11 @@
   transition: all 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
-.prestige-btn:hover { background: rgba(255,215,0,0.15); }
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.prestige-btn:hover { background-color: rgba(255,215,0,0.15); }
 .prestige-btn:disabled { opacity: 0.35; cursor: default; border-color: var(--muted); color: var(--muted); }
 
 /* Scrollable content */
@@ -384,6 +444,7 @@
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .pulse-ember, .float-pop, .ticket-toast, .particle, .golden-pizza, .screen-shake,
-  .milestone-flash, .golden-enter { animation: none !important; }
+  .milestone-flash, .golden-enter, .prestige-btn, .golden-sparkle { animation: none !important; }
   .tap-btn:active { transform: none; }
+  .pizza-steam { display: none; }
 }

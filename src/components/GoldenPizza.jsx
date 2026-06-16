@@ -2,6 +2,7 @@ import React from 'react';
 import { useGameState } from '../state/GameContext.jsx';
 import { useGoldenPizza } from '../hooks/useGoldenPizza.js';
 import { useAudio } from '../hooks/useAudio.js';
+import GoldenPizzaGraphic from '../assets/pizza/GoldenPizzaGraphic.jsx';
 
 export default function GoldenPizza() {
   const state = useGameState();
@@ -24,7 +25,7 @@ export default function GoldenPizza() {
       style={{ left: `${x}%`, top: `${y}%` }}
       aria-label="Catch the golden pizza!"
     >
-      🍕
+      <GoldenPizzaGraphic size={64} />
     </button>
   );
 }

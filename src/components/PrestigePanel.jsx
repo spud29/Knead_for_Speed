@@ -3,6 +3,7 @@ import { useGameState, useDispatch } from '../state/GameContext.jsx';
 import { STAR_UPGRADES, calcStarsEarned } from '../constants/prestige.js';
 import { useAudio } from '../hooks/useAudio.js';
 import { fmt } from '../utils/fmt.js';
+import { StarIcon } from '../assets/icons';
 
 export default function PrestigePanel() {
   const state = useGameState();
@@ -30,8 +31,8 @@ export default function PrestigePanel() {
       <div className="section-header" style={{ marginTop: 0 }}>FRANCHISE</div>
 
       <div className="surface-2-bg" style={{ borderRadius: 8, padding: 16, textAlign: 'center', marginTop: 8 }}>
-        <div className="star-text font-display" style={{ fontSize: '2.2rem' }}>
-          {state.stars} ⭐
+        <div className="star-text font-display" style={{ fontSize: '2.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          {state.stars} <StarIcon size={32} />
         </div>
         <div className="muted-text font-ticket" style={{ fontSize: '0.7rem', marginTop: 4 }}>
           Star{state.stars !== 1 ? 's' : ''} earned
@@ -53,7 +54,7 @@ export default function PrestigePanel() {
           disabled={!canPrestige}
           className="prestige-btn"
         >
-          {confirmArmed ? 'TAP AGAIN TO CONFIRM' : `OPEN NEW LOCATION (+${starsIfPrestige}⭐)`}
+          {confirmArmed ? 'TAP AGAIN TO CONFIRM' : <>OPEN NEW LOCATION (+{starsIfPrestige}<StarIcon size={14} style={{ display: 'inline-block', verticalAlign: 'middle' }} />)</>}
         </button>
 
         {canPrestige && (
@@ -91,7 +92,7 @@ export default function PrestigePanel() {
             </div>
             {!isBought && (
               <div className={`font-ticket ${canBuy ? 'star-text' : 'muted-text'}`} style={{ fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                {u.cost} ⭐
+                {u.cost} <StarIcon size={14} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
               </div>
             )}
           </button>

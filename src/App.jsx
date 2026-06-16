@@ -3,6 +3,7 @@ import { GameProvider, useGameState } from './state/GameContext.jsx';
 import { useGameLoop } from './hooks/useGameLoop.js';
 import './styles/theme.css';
 
+import SvgDefs from './assets/SvgDefs.jsx';
 import Toast from './components/Toast.jsx';
 import TapArea from './components/TapArea.jsx';
 import GoldenPizza from './components/GoldenPizza.jsx';
@@ -37,6 +38,7 @@ function GameScreen() {
 
   return (
     <div className="kfs-root" style={{ position: 'relative' }}>
+      <SvgDefs />
       <Toast />
 
       <GoldenPizza />

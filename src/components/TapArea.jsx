@@ -3,8 +3,16 @@ import { useGameState, useDispatch } from '../state/GameContext.jsx';
 import { computeStats } from '../engine/computeStats.js';
 import { useAudio } from '../hooks/useAudio.js';
 import { fmt } from '../utils/fmt.js';
+import MainPizza from '../assets/pizza/MainPizza.jsx';
+import {
+  CheeseParticle, TomatoParticle, OliveParticle, PepperParticle,
+  PizzaSliceParticle, EggParticle, BasilParticle, MushroomParticle
+} from '../assets/particles';
 
-const PARTICLE_EMOJIS = ['🧀', '🍅', '🫒', '🌶️', '🍕', '🥚'];
+const PARTICLE_COMPONENTS = [
+  CheeseParticle, TomatoParticle, OliveParticle, PepperParticle,
+  PizzaSliceParticle, EggParticle, BasilParticle, MushroomParticle
+];
 
 export default function TapArea() {
   const state = useGameState();
@@ -33,11 +41,13 @@ export default function TapArea() {
     const newParticles = Array.from({ length: count }, (_, i) => {
       const angle = (Math.PI * 2 * i / count) + (Math.random() - 0.5) * 0.8;
       const dist = 40 + Math.random() * 50;
+      const rot = Math.floor(Math.random() * 210 - 30);
       return {
         id: now + i + Math.random(),
-        emoji: PARTICLE_EMOJIS[Math.floor(Math.random() * PARTICLE_EMOJIS.length)],
+        Component: PARTICLE_COMPONENTS[Math.floor(Math.random() * PARTICLE_COMPONENTS.length)],
         px: Math.cos(angle) * dist,
         py: Math.sin(angle) * dist,
+        rot,
       };
     });
 
@@ -81,18 +91,21 @@ export default function TapArea() {
           </div>
         ))}
 
-        {particles.map(p => (
-          <div
-            key={p.id}
-            className="particle"
-            style={{ left: '50%', top: '50%', '--px': `${p.px}px`, '--py': `${p.py}px` }}
-          >
-            {p.emoji}
-          </div>
-        ))}
+        {particles.map(p => {
+          const Comp = p.Component;
+          return (
+            <div
+              key={p.id}
+              className="particle"
+              style={{ left: '50%', top: '50%', '--px': `${p.px}px`, '--py': `${p.py}px`, '--rot': `${p.rot}deg` }}
+            >
+              <Comp size={20} />
+            </div>
+          );
+        })}
 
         <button onClick={handleTap} className="tap-btn pulse-ember" aria-label="Make a pizza">
-          <span style={{ fontSize: '4.5rem' }}>🍕</span>
+          <MainPizza size={140} />
         </button>
       </div>
     </>

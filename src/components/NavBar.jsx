@@ -1,12 +1,13 @@
 import React from 'react';
 import { useGameState, useDispatch } from '../state/GameContext.jsx';
+import { NavShop, NavBadges, NavStats, NavFranchise, NavSettings } from '../assets/icons';
 
 const TABS = [
-  { id: 'shop', icon: '🍕', label: 'Shop', alwaysVisible: true },
-  { id: 'achievements', icon: '🏆', label: 'Badges', alwaysVisible: false },
-  { id: 'stats', icon: '📊', label: 'Stats', alwaysVisible: true },
-  { id: 'franchise', icon: '⭐', label: 'Franchise', alwaysVisible: false },
-  { id: 'settings', icon: '⚙️', label: 'Settings', alwaysVisible: true },
+  { id: 'shop', Icon: NavShop, label: 'Shop', alwaysVisible: true },
+  { id: 'achievements', Icon: NavBadges, label: 'Badges', alwaysVisible: false },
+  { id: 'stats', Icon: NavStats, label: 'Stats', alwaysVisible: true },
+  { id: 'franchise', Icon: NavFranchise, label: 'Franchise', alwaysVisible: false },
+  { id: 'settings', Icon: NavSettings, label: 'Settings', alwaysVisible: true },
 ];
 
 export default function NavBar() {
@@ -33,7 +34,7 @@ export default function NavBar() {
           aria-label={tab.label}
           aria-current={state.activeTab === tab.id ? 'page' : undefined}
         >
-          <span className="nav-tab-icon">{tab.icon}</span>
+          <span className="nav-tab-icon"><tab.Icon size={22} /></span>
           <span>{tab.label}</span>
         </button>
       ))}

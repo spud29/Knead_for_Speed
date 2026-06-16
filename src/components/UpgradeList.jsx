@@ -31,7 +31,7 @@ function UpgradeRow({ upgrade, state, dispatch, play }) {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div className="icon-box ember-text">
-          <Icon size={18} />
+          <Icon size={32} />
         </div>
         <div>
           <div style={{ fontSize: '0.85rem', fontWeight: 600, color: affordable ? 'var(--text)' : 'var(--muted)' }}>

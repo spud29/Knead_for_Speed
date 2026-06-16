@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGameState } from '../state/GameContext.jsx';
 import { ACHIEVEMENTS } from '../constants/achievements.js';
+import { AchievementUnlocked, AchievementLocked } from '../assets/icons';
 
 const CATEGORY_LABELS = {
   tapping: 'Tapping',
@@ -43,8 +44,8 @@ export default function AchievementsPanel() {
                 const isUnlocked = state.achievements.includes(a.id);
                 return (
                   <div key={a.id} className={`achievement-card ${isUnlocked ? 'unlocked' : ''}`}>
-                    <div style={{ fontSize: '1.5rem', marginBottom: 4 }}>
-                      {isUnlocked ? '🏆' : '🔒'}
+                    <div style={{ marginBottom: 4 }}>
+                      {isUnlocked ? <AchievementUnlocked size={28} /> : <AchievementLocked size={28} />}
                     </div>
                     <div style={{ fontSize: '0.7rem', fontWeight: 600 }}>
                       {isUnlocked ? a.name : '???'}
