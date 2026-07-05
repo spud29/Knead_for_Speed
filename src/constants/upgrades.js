@@ -24,10 +24,10 @@ export const BUSINESS_UPGRADES = [
   { id: 'app', name: 'Ordering App', icon: OrderingApp, baseCost: 200000, growth: 1.22, effectLabel: '+30% production', category: 'business', unlock: { type: 'earned', value: 100000 } },
   { id: 'ghost_kitchen', name: 'Ghost Kitchen', icon: GhostKitchen, baseCost: 1000000, growth: 1.25, effectLabel: '+50% production', category: 'business', unlock: { type: 'prestige', value: 1 } },
   { id: 'empire', name: 'Pizza Empire', icon: PizzaEmpire, baseCost: 5000000, growth: 1.28, effectLabel: '+100% to everything', category: 'business', unlock: { type: 'prestige', value: 3 } },
-  { id: 'mogul', name: 'Dough Mogul', icon: DoughMogul, baseCost: 50000000, growth: 1.3, effectLabel: '2× everything', category: 'business', unlock: { type: 'prestige', value: 5 } },
+  { id: 'mogul', name: 'Dough Mogul', icon: DoughMogul, baseCost: 50000000, growth: 1.3, effectLabel: '+100% everything', category: 'business', unlock: { type: 'prestige', value: 5 } },
   { id: 'tv_show', name: 'Reality TV Show', icon: RealityTVShow, baseCost: 100000000, growth: 1.25, effectLabel: '+75% production', category: 'business', unlock: { type: 'prestige', value: 4 } },
   { id: 'crypto_dough', name: 'DoughCoin ICO', icon: DoughCoinICO, baseCost: 500000000, growth: 1.28, effectLabel: '+150% to everything', category: 'business', unlock: { type: 'prestige', value: 7 } },
-  { id: 'world_domination', name: 'World Domination', icon: WorldDomination, baseCost: 5000000000, growth: 1.30, effectLabel: '3× everything', category: 'business', unlock: { type: 'prestige', value: 10 } },
+  { id: 'world_domination', name: 'World Domination', icon: WorldDomination, baseCost: 5000000000, growth: 1.30, effectLabel: '+200% everything', category: 'business', unlock: { type: 'prestige', value: 10 } },
 ];
 
 export const ALL_UPGRADES = [...KITCHEN_UPGRADES, ...BUSINESS_UPGRADES];

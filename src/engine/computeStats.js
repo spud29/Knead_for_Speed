@@ -34,8 +34,8 @@ export function computeStats(state) {
   globalMult += yelp * 0.20;
   globalMult += empire * 1.0;
   globalMult += crypto_dough * 1.50;
-  globalMult *= Math.pow(2, mogul);
-  globalMult *= Math.pow(3, world_domination);
+  globalMult += mogul * 1.0;
+  globalMult += world_domination * 2.0;
 
   // Star upgrade: Faster Ovens (+25% production per level)
   const fasterOvens = starUpgrades.faster_ovens || 0;

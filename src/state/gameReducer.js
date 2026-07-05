@@ -3,6 +3,7 @@ import { ALL_UPGRADES, costFor } from '../constants/upgrades.js';
 import { STAR_UPGRADES, calcStarsEarned } from '../constants/prestige.js';
 import { ACHIEVEMENTS } from '../constants/achievements.js';
 import { INITIAL_STATE } from './initialState.js';
+import { fmtCompact } from '../utils/fmt.js';
 
 function checkAchievements(state) {
   const newAchievements = [];
@@ -87,7 +88,7 @@ export function gameReducer(state, action) {
         dough: state.dough + bonus,
         totalDoughEarned: state.totalDoughEarned + bonus,
         runDoughEarned: state.runDoughEarned + bonus,
-        toast: { key: Date.now(), text: `Nice tip! +$${fmtInline(bonus)}` },
+        toast: { key: Date.now(), text: `Nice tip! +$${fmtCompact(bonus)}` },
       };
     }
 
@@ -122,7 +123,7 @@ export function gameReducer(state, action) {
           s.dough += bonus;
           s.totalDoughEarned += bonus;
           s.runDoughEarned += bonus;
-          s.toast = { key: Date.now(), text: `Dough Shower! +$${fmtInline(bonus)}` };
+          s.toast = { key: Date.now(), text: `Dough Shower! +$${fmtCompact(bonus)}` };
           break;
         }
         case 'frenzy': {
@@ -265,12 +266,3 @@ export function gameReducer(state, action) {
   }
 }
 
-function fmtInline(n) {
-  if (!isFinite(n)) return '0';
-  if (n < 1000) return n % 1 === 0 ? n.toFixed(0) : n.toFixed(1);
-  const units = ['K', 'M', 'B', 'T'];
-  let v = n;
-  let idx = -1;
-  while (v >= 1000 && idx < units.length - 1) { v /= 1000; idx++; }
-  return v.toFixed(2) + units[idx];
-}
